@@ -21,14 +21,30 @@ button{background:#6366f1;color:#fff;border:none;border-radius:8px}
 </div>
 <script>
 const API = "https://vodeo-downloder-net.onrender.com";
+
 function download(type){
- const url=document.getElementById("url").value;
- document.getElementById("msg").innerText="⏳ Processing...";
- fetch(API+"/download",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({url,type})})
- .then(r=>r.json()).then(d=>{
- document.getElementById("msg").innerText=d.success?"✅ Done":"❌ Failed";
- }).catch(()=>{document.getElementById("msg").innerText="❌ Server error";});
+  const url = document.getElementById("url").value;
+  document.getElementById("msg").innerText = "⏳ Processing...";
+
+  fetch(API + "/download", {
+    method: "POST",
+    mode: "cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ url, type })
+  })
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById("msg").innerText =
+      d.success ? "✅ Done" : "❌ Failed";
+  })
+  .catch(err => {
+    console.error(err);
+    document.getElementById("msg").innerText = "❌ Server error";
+  });
 }
 </script>
+
 </body>
 </html>
